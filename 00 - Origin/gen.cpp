@@ -40,7 +40,7 @@ using i128 = __int128_t;
 void solve() 
 {
     srand(time(0));
-    cout << rand() % 10 << " " << rand() % 10 << "\n";
+
 }
 
 signed main() {

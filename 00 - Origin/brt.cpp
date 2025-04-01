@@ -39,8 +39,7 @@ using i128 = __int128_t;
 
 void solve() 
 {
-    int a, b; cin >> a >> b;
-    cout << a + b << "\n";    
+
 }
 
 signed main() {
