@@ -81,11 +81,4 @@ int power(int a, i64 b, int p) {
     }
     return res;
 }
-constexpr int k = 10000;
-vector<i64> f(k + 1), g(k + 1);
-for (int i = 0; i <= k; i++) g[i] = power(f[i] = i ? f[i - 1] * i % mod : 1, mod - 2, mod);
-auto binom = [&](int n, int m) -> i64 {
-    if (m < 0 or n < m) return 0;
-    return f[n] * g[m] % mod * g[n - m] % mod;
-};
 

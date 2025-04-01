@@ -1,12 +1,12 @@
 template <class T>
 struct DSU {
-    std::vector<int> f;
-    std::vector<int> size;
-    std::vector<T> w;
+    vector<int> f;
+    vector<int> size;
+    vector<T> w;
 
     DSU(int n) : f(n), size(n), w(n) {
-        std::iota(f.begin(), f.end(), 0);
-        std::fill(size.begin(), size.end(), 1);
+        iota(f.begin(), f.end(), 0);
+        fill(size.begin(), size.end(), 1);
     }
 
     int find(int x) {

@@ -1,11 +1,11 @@
 class LCA {
-    using Adj = std::vector<std::vector<int>>;  
+    using Adj = vector<vector<int>>;  
 public:
     int m_num;                              
     int m_lognum;                            
     int m_root;                              
-    std::vector<std::vector<int>> m_parent;  
-    std::vector<int> m_depth;                
+    vector<vector<int>> m_parent;  
+    vector<int> m_depth;                
  
     LCA(const Adj& g, int root) {
         init(g, root);
@@ -18,7 +18,7 @@ public:
         m_lognum = 1;
         while (m_num >> m_lognum) ++m_lognum;
  
-        m_parent.assign(m_lognum, std::vector<int>(m_num, -1));
+        m_parent.assign(m_lognum, vector<int>(m_num, -1));
         m_depth.assign(m_num, -1);
         dfs(g, m_root, -1, 0);
         for (int k = 0; k + 1 < m_lognum; k++) {
@@ -38,7 +38,7 @@ public:
     }
  
     int lca(int u, int v) {
-        if (m_depth[u] > m_depth[v]) std::swap(u, v);
+        if (m_depth[u] > m_depth[v]) swap(u, v);
  
         for (int k = 0; k < m_lognum; k++) {
             if ((m_depth[v] - m_depth[u]) >> k & 1) {
