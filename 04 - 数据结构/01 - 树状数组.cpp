@@ -65,6 +65,19 @@ public:
 };
 
 /*
+求逆序对
+*/
+const auto M = ranges::max(a);
+Fenwick<int> bit(M + 1);//posQuery是右闭的！
+i64 cnt{};
+for (int i = n - 1; i >= 0; i--) {
+    // cnt += bit.posQuery(a[i]);// i < j, a[i] >= a[j]
+    cnt += bit.posQuery(a[i] - 1);// i < j, a[i] > a[j]
+    bit.modify(a[i], 1);
+}
+
+
+/*
 离线查询求区间内不同种类元素数目
 */
 struct Query {
