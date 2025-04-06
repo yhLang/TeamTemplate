@@ -1,8 +1,3 @@
-inline int __lg(int __n) { 
-    if (__n == 0) {return -1;}
-    return sizeof(int) * __CHAR_BIT__  - 1 - __builtin_clz(__n); 
-}
-
 template <class T, class Cmp = greater<T>>
 struct Max {
     const Cmp cmp = Cmp();
