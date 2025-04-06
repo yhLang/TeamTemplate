@@ -22,9 +22,11 @@ void sieve(int n) {
                 break;
             }
             minp[i * p] = p;
-            if (p == minp[i]) {
+            if (p == minp[i]) {// 若 p 是 i 的最小质因子，则 i * p 存在平方因子，
+                // 故 Möbius 函数值为 0，这里不更新 mu[i * p]，直接退出循环
                 break;
             }
+            // 否则，按照 Möbius 函数的乘法性质，更新 mu[i * p] = -mu[i]
             mu[i * p] = -mu[i];
         }
     }
@@ -54,8 +56,6 @@ Z sumMu(int n) {
 }
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
     
     sieve(N);
     
@@ -63,13 +63,14 @@ int main() {
     cin >> L >> R;
     L -= 1;
     
-    Z ans = 0;
+    Z ans = 0;// 枚举 l 分块，利用区间划分优化求和
+    // 这里的 l 是用于区分不同的倍数区间
     for (int l = 1, r; l <= R; l = r + 1) {
-        r = R / (R / l);
-        if (l <= L) {
+        r = R / (R / l); // 找到使得 R / l 值相同的最大区间端点 r
+        if (l <= L) {// 如果 l 对应的区间也包含在 L 内，则确保 r 不超过 L 中相应区间的上界
             r = min(r, L / (L / l));
         }
-        
+        // 乘上 (sumMu(r) - sumMu(l - 1)) 表示区间内 Möbius 函数前缀和的变化
         ans += (power(Z(2), R / l - L / l) - 1) * (sumMu(r) - sumMu(l - 1));
     }
     
