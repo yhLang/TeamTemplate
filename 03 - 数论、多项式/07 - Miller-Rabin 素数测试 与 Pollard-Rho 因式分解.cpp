@@ -34,9 +34,9 @@ bool isprime(i64 n) {//大数素性测试
     return true;
 }
 
-std::vector<i64> factorize(i64 n) {//目的是进行因式分解，得出这个数的所有质因数
-    std::vector<i64> p;
-    std::function<void(i64)> f = [&](i64 n) {
+vector<i64> factorize(i64 n) {//目的是进行因式分解，得出这个数的所有质因数
+    vector<i64> p;
+    function<void(i64)> f = [&](i64 n) {
         if (n <= 10000) {
             for (int i = 2; i * i <= n; ++i)
                 for (; n % i == 0; n /= i)
@@ -62,16 +62,16 @@ std::vector<i64> factorize(i64 n) {//目的是进行因式分解，得出这个�
             while (d == 1) {
                 y = g(y);
                 ++lam;
-                v = mul(v, std::abs(x - y), n);
+                v = mul(v, abs(x - y), n);
                 if (lam % 127 == 0) {
-                    d = std::gcd(v, n);
+                    d = gcd(v, n);
                     v = 1;
                 }
                 if (power == lam) {
                     x = y;
                     power *= 2;
                     lam = 0;
-                    d = std::gcd(v, n);
+                    d = gcd(v, n);
                     v = 1;
                 }
             }
@@ -84,18 +84,18 @@ std::vector<i64> factorize(i64 n) {//目的是进行因式分解，得出这个�
         }
     };
     f(n);
-    std::sort(p.begin(), p.end());
+    sort(p.begin(), p.end());
     return p;
 }
 
 //通过质因数组合出所有因数
-using factor = std::pair<i64, int>;//(质因数，有几个这个质因数)
+using factor = pair<i64, int>;//(质因数，有几个这个质因数)
 
-std::vector<i64> GetDivisors(const std::vector<i64>& factors) {
-    std::unordered_map<i64, int> cnt;
+vector<i64> GetDivisors(const vector<i64>& factors) {
+    unordered_map<i64, int> cnt;
     for (auto fi : factors) {cnt[fi] += 1;}
-    std::vector<factor> fac_cnt(cnt.begin(), cnt.end());
-    std::vector<i64> divisors = {1};
+    vector<factor> fac_cnt(cnt.begin(), cnt.end());
+    vector<i64> divisors = {1};
     for (auto &p : fac_cnt) {
         int sz = divisors.size();
         for (int i = 0; i < sz; i++) {

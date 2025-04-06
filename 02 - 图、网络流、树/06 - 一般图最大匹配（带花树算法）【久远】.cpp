@@ -1,13 +1,13 @@
 struct Graph {
     int n;
-    std::vector<std::vector<int>> e;
+    vector<vector<int>> e;
     Graph(int n) : n(n), e(n) {}
     void addEdge(int u, int v) {
         e[u].push_back(v);
         e[v].push_back(u);
     }
-    std::vector<int> findMatching() {
-        std::vector<int> match(n, -1), vis(n), link(n), f(n), dep(n);
+    vector<int> findMatching() {
+        vector<int> match(n, -1), vis(n), link(n), f(n), dep(n);
         
         // disjoint set union
         auto find = [&](int u) {
@@ -21,13 +21,13 @@ struct Graph {
             v = find(v);
             while (u != v) {
                 if (dep[u] < dep[v])
-                    std::swap(u, v);
+                    swap(u, v);
                 u = find(link[match[u]]);
             }
             return u;
         };
         
-        std::queue<int> que;
+        queue<int> que;
         auto blossom = [&](int u, int v, int p) {
             while (find(u) != p) {
                 link[u] = v;
@@ -47,10 +47,10 @@ struct Graph {
             while (!que.empty())
                 que.pop();
             
-            std::iota(f.begin(), f.end(), 0);
+            iota(f.begin(), f.end(), 0);
             
             // vis = 0 corresponds to inner vertices, vis = 1 corresponds to outer vertices
-            std::fill(vis.begin(), vis.end(), -1);
+            fill(vis.begin(), vis.end(), -1);
             
             que.push(u);
             vis[u] = 1;

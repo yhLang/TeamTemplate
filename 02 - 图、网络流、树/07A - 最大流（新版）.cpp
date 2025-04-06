@@ -1,9 +1,9 @@
 template <class T>
 class Flow {
-    std::vector<int> cur, dep;
+    vector<int> cur, dep;
     bool bfs(int s, int t) {
         dep.assign(n, -1);
-        std::queue<int> q;
+        queue<int> q;
         dep[s] = 0;
 
         q.push(s);
@@ -40,7 +40,7 @@ class Flow {
             T c = pr.second;
 
             if (c > 0 and dep[v] == dep[u] + 1) {
-                T out = dfs(v, t, std::min(res, c));
+                T out = dfs(v, t, min(res, c));
                 adj[j].second -= out;
                 adj[j ^ 1].second += out;
 
@@ -55,9 +55,9 @@ class Flow {
 
 public:
     int n;
-    std::vector<std::pair<int, T>> adj;
-    std::vector<std::vector<int>> g;
-    static constexpr T Inf = std::numeric_limits<T>::max();
+    vector<pair<int, T>> adj;
+    vector<vector<int>> g;
+    static constexpr T Inf = numeric_limits<T>::max();
 
     Flow(int m) : n(m), g(m) {}
 
@@ -86,11 +86,11 @@ public:
         return ans;
     }
 
-    std::vector<std::pair<int, int>> getCuts(int s, int t) {
-        std::string vis(n, 't');
+    vector<pair<int, int>> getCuts(int s, int t) {
+        string vis(n, 't');
         vis[s] = 's';
 
-        std::queue<int> q;
+        queue<int> q;
         q.push(s);
 
         while (!q.empty()) {
@@ -108,7 +108,7 @@ public:
             }
         }
 
-        std::vector<std::pair<int, int>> cuts;
+        vector<pair<int, int>> cuts;
         for (int x = 0; x < n; x++) {
             if (vis[x] == 't') {
                 continue;

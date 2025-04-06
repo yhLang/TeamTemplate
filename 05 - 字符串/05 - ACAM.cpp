@@ -1,11 +1,11 @@
 template <int Z, char Base>
 struct AcAutomaton {
-    std::vector<std::array<int, Z>> trans;
-    std::vector<std::vector<int>> ID;
-    std::vector<int> fail;
+    vector<array<int, Z>> trans;
+    vector<vector<int>> ID;
+    vector<int> fail;
     int SIZE = 0, tot = 0;
 
-    AcAutomaton(const std::vector<std::string> &s) {
+    AcAutomaton(const vector<string> &s) {
         for (auto t : s) {SIZE += t.size();}
         trans.resize(SIZE + 1);
         ID.resize(SIZE + 1);
@@ -14,7 +14,7 @@ struct AcAutomaton {
         build();
     }
 
-    void insert(int id, const std::string &s) {
+    void insert(int id, const string &s) {
         int p = 0;
         for (char c : s) {
             c -= Base;
@@ -27,7 +27,7 @@ struct AcAutomaton {
     }
 
     void build() {
-        std::queue<int> q;
+        queue<int> q;
         for (int &y : trans[0]) if (y != 0) {q.push(y);}
         while (not q.empty()) {
             int x = q.front();

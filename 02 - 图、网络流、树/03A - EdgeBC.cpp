@@ -1,6 +1,6 @@
 class EdgeBC {
-    const std::vector<std::vector<int>> &e;//存原来的无向图
-    std::vector<int> stk; // stack
+    const vector<vector<int>> &e;//存原来的无向图
+    vector<int> stk; // stack
     int r = 0, cur = 0;
 
     void dfs(int x, int fa) {//dfs生成树上跑强连通分量
@@ -15,9 +15,9 @@ class EdgeBC {
           //强连通分量
             if (dfn[y] == -1) {
                 dfs(y, x);
-                low[x] = std::min(low[x], low[y]);
+                low[x] = min(low[x], low[y]);
             } else {
-                low[x] = std::min(low[x], dfn[y]);
+                low[x] = min(low[x], dfn[y]);
             }
         }
                 
@@ -33,12 +33,12 @@ class EdgeBC {
 
 public:
     // original graph
-    std::vector<int> dfn, low, bel;//bel[y](y结点对应的联通快编号)
+    vector<int> dfn, low, bel;//bel[y](y结点对应的联通快编号)
     // shrinking graph
-    std::vector<std::vector<int>> g;//由桥构成的无根树
+    vector<vector<int>> g;//由桥构成的无根树
     int cntBlock = 0, componentNum = 0;
 
-    EdgeBC(const std::vector<std::vector<int>> &e)
+    EdgeBC(const vector<vector<int>> &e)
         : e(e), dfn(e.size(), -1), low(e.size()), bel(e.size(), -1), cutDeg(e.size()) {
         int n = e.size();
         q.assign(n + 1, 0);

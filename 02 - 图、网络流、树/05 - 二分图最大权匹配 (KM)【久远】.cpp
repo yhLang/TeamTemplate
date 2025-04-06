@@ -1,7 +1,7 @@
 template<class T>
 struct MaxAssignment {
     public:
-        T solve(int nx, int ny, std::vector<std::vector<T>> a) {
+        T solve(int nx, int ny, vector<vector<T>> a) {
             assert(0 <= nx && nx <= ny);
             assert(int(a.size()) == nx);
             for (int i = 0; i < nx; ++i) {
@@ -21,16 +21,16 @@ struct MaxAssignment {
             
             costs.resize(nx + 1);
             costs[0] = 0;
-            lx.assign(nx, std::numeric_limits<T>::max());
+            lx.assign(nx, numeric_limits<T>::max());
             ly.assign(ny, 0);
             xy.assign(nx, -1);
             yx.assign(ny, -1);
             slackx.resize(ny);
             for (int cur = 0; cur < nx; ++cur) {
-                std::queue<int> que;
+                queue<int> que;
                 visx.assign(nx, false);
                 visy.assign(ny, false);
-                slack.assign(ny, std::numeric_limits<T>::max());
+                slack.assign(ny, numeric_limits<T>::max());
                 p.assign(nx, -1);
                 
                 for (int x = 0; x < nx; ++x) {
@@ -65,10 +65,10 @@ struct MaxAssignment {
                     if (found)
                         break;
                     
-                    T delta = std::numeric_limits<T>::max();
+                    T delta = numeric_limits<T>::max();
                     for (int y = 0; y < ny; ++y)
                         if (!visy[y])
-                            delta = std::min(delta, slack[y]);
+                            delta = min(delta, slack[y]);
                     for (int x = 0; x < nx; ++x)
                         if (visx[x])
                             lx[x] -= delta;
@@ -107,17 +107,17 @@ struct MaxAssignment {
             }
             return costs[nx];
         }
-        std::vector<int> assignment() {
+        vector<int> assignment() {
             return xy;
         }
-        std::pair<std::vector<T>, std::vector<T>> labels() {
-            return std::make_pair(lx, ly);
+        pair<vector<T>, vector<T>> labels() {
+            return make_pair(lx, ly);
         }
-        std::vector<T> weights() {
+        vector<T> weights() {
             return costs;
         }
     private:
-        std::vector<T> lx, ly, slack, costs;
-        std::vector<int> xy, yx, p, slackx;
-        std::vector<bool> visx, visy;
+        vector<T> lx, ly, slack, costs;
+        vector<int> xy, yx, p, slackx;
+        vector<bool> visx, visy;
 };

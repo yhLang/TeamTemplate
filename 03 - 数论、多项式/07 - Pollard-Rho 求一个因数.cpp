@@ -1,10 +1,10 @@
 template <class T>
 struct PollardRho : public MillerRabin<T> {
-    std::mt19937 myrand;
+    mt19937 myrand;
     PollardRho(const i64 seed = time(0)) : myrand(seed) {}
 
     constexpr T rd(T l, T r) {
-        return std::uniform_int_distribution<T>(l, r)(myrand);
+        return uniform_int_distribution<T>(l, r)(myrand);
     }
 
     constexpr T operator()(T n) { // 返回 n 的随机一个[2, n-1]内的因子, 或者判定是质数
@@ -20,11 +20,11 @@ struct PollardRho : public MillerRabin<T> {
             do {
                 for (int i = 0; i < 128; i++) {
                     t = f(t), r = f(f(r));
-                    if (t == r || (q = super.mulp(p, std::abs(t - r), n)) == 0)
+                    if (t == r || (q = super.mulp(p, abs(t - r), n)) == 0)
                         break;
                     p = q;
                 }
-                T d = std::gcd<T>(p, n);
+                T d = gcd<T>(p, n);
                 if (d > 1)
                     return d;
             } while (t != r);

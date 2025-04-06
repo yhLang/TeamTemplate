@@ -1,5 +1,5 @@
 class VertexBC {
-    const std::vector<std::vector<int>> &e;
+    const vector<vector<int>> &e;
     int cur = 0;
 
     void dfs(int x, int root) {
@@ -10,13 +10,13 @@ class VertexBC {
             if (dfn[y] == -1) {
                 sonNum += 1;
                 dfs(y, root);
-                low[x] = std::min(low[x], low[y]);
+                low[x] = min(low[x], low[y]);
 
                 if (low[y] >= dfn[x] and x != root) {
                     cutDeg[x] += 1;
                 }
             } else {
-                low[x] = std::min(low[x], dfn[y]);
+                low[x] = min(low[x], dfn[y]);
             }
         }
 
@@ -27,10 +27,10 @@ class VertexBC {
 
 public:
     // original graph
-    std::vector<int> dfn, low, cutDeg;
+    vector<int> dfn, low, cutDeg;
     int componentNum = 0;
 
-    VertexBC(const std::vector<std::vector<int>> &e)
+    VertexBC(const vector<vector<int>> &e)
         : e(e), dfn(e.size(), -1), low(e.size()), cutDeg(e.size()) {
         int n = e.size();
 

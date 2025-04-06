@@ -1,15 +1,15 @@
 template <int Z, char Base>
 struct PAM {
-    std::vector<std::array<int, Z>> trans;
-    std::vector<int> fail, len, dep, cnt;
-    std::string s;
+    vector<array<int, Z>> trans;
+    vector<int> fail, len, dep, cnt;
+    string s;
 
     int cur{0}, tot{1};
     // 0 是偶数节点， 1 是奇数节点， 两个fail互相指向
     PAM(int n) : trans(n + 2), fail(n + 2), len(n + 2), dep(n + 2), cnt(n + 2) {fail[0] = 1; fail[1] = 0; len[0] = 0; len[1] = -1;}
 
-    PAM(std::string &s) : PAM(std::size(s)) {
-        for (int i = 0; i < std::size(s); i++) {
+    PAM(string &s) : PAM(size(s)) {
+        for (int i = 0; i < size(s); i++) {
             add(i, s[i]);
         }
     }
@@ -39,7 +39,7 @@ struct PAM {
 
     // PAM 的 FailTree 是 1 为根的
     auto getFailTree() const {
-        std::vector e(tot + 1, std::vector<int>());
+        vector e(tot + 1, vector<int>());
         for (int i = 0; i <= tot; i++) if (i != 1) {
             e[fail[i]].emplace_back(i);
         }

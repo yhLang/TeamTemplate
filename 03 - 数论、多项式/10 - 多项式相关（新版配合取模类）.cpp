@@ -1,6 +1,6 @@
-std::vector<int> rev;
+vector<int> rev;
 template<int P>
-std::vector<MInt<P>> roots{0, 1};
+vector<MInt<P>> roots{0, 1};
 
 template<int P>
 constexpr MInt<P> findPrimitiveRoot() {
@@ -22,7 +22,7 @@ template<>
 constexpr MInt<998244353> primitiveRoot<998244353> {31};
 
 template<int P>
-constexpr void dft(std::vector<MInt<P>> &a) {
+constexpr void dft(vector<MInt<P>> &a) {
     int n = a.size();
     
     if (int(rev.size()) != n) {
@@ -35,7 +35,7 @@ constexpr void dft(std::vector<MInt<P>> &a) {
     
     for (int i = 0; i < n; i++) {
         if (rev[i] < i) {
-            std::swap(a[i], a[rev[i]]);
+            swap(a[i], a[rev[i]]);
         }
     }
     if (roots<P>.size() < n) {
@@ -63,9 +63,9 @@ constexpr void dft(std::vector<MInt<P>> &a) {
 }
 
 template<int P>
-constexpr void idft(std::vector<MInt<P>> &a) {
+constexpr void idft(vector<MInt<P>> &a) {
     int n = a.size();
-    std::reverse(a.begin() + 1, a.end());
+    reverse(a.begin() + 1, a.end());
     dft(a);
     MInt<P> inv = (1 - P) / n;
     for (int i = 0; i < n; i++) {
@@ -74,20 +74,20 @@ constexpr void idft(std::vector<MInt<P>> &a) {
 }
 
 template<int P = 998244353>
-struct Poly : public std::vector<MInt<P>> {
+struct Poly : public vector<MInt<P>> {
     using Value = MInt<P>;
     
-    Poly() : std::vector<Value>() {}
-    explicit constexpr Poly(int n) : std::vector<Value>(n) {}
+    Poly() : vector<Value>() {}
+    explicit constexpr Poly(int n) : vector<Value>(n) {}
     
-    explicit constexpr Poly(const std::vector<Value> &a) : std::vector<Value>(a) {}
-    constexpr Poly(const std::initializer_list<Value> &a) : std::vector<Value>(a) {}
+    explicit constexpr Poly(const vector<Value> &a) : vector<Value>(a) {}
+    constexpr Poly(const initializer_list<Value> &a) : vector<Value>(a) {}
     
-    template<class InputIt, class = std::_RequireInputIter<InputIt>>
-    explicit constexpr Poly(InputIt first, InputIt last) : std::vector<Value>(first, last) {}
+    template<class InputIt, class = _RequireInputIter<InputIt>>
+    explicit constexpr Poly(InputIt first, InputIt last) : vector<Value>(first, last) {}
     
     template<class F>
-    explicit constexpr Poly(int n, F f) : std::vector<Value>(n) {
+    explicit constexpr Poly(int n, F f) : vector<Value>(n) {
         for (int i = 0; i < n; i++) {
             (*this)[i] = f(i);
         }
@@ -110,7 +110,7 @@ struct Poly : public std::vector<MInt<P>> {
         return f;
     }
     constexpr friend Poly operator+(const Poly &a, const Poly &b) {
-        Poly res(std::max(a.size(), b.size()));
+        Poly res(max(a.size(), b.size()));
         for (int i = 0; i < a.size(); i++) {
             res[i] += a[i];
         }
@@ -120,7 +120,7 @@ struct Poly : public std::vector<MInt<P>> {
         return res;
     }
     constexpr friend Poly operator-(const Poly &a, const Poly &b) {
-        Poly res(std::max(a.size(), b.size()));
+        Poly res(max(a.size(), b.size()));
         for (int i = 0; i < a.size(); i++) {
             res[i] += a[i];
         }
@@ -130,7 +130,7 @@ struct Poly : public std::vector<MInt<P>> {
         return res;
     }
     constexpr friend Poly operator-(const Poly &a) {
-        std::vector<Value> res(a.size());
+        vector<Value> res(a.size());
         for (int i = 0; i < int(res.size()); i++) {
             res[i] = -a[i];
         }
@@ -141,7 +141,7 @@ struct Poly : public std::vector<MInt<P>> {
             return Poly();
         }
         if (a.size() < b.size()) {
-            std::swap(a, b);
+            swap(a, b);
         }
         int n = 1, tot = a.size() + b.size() - 1;
         while (n < tot) {
@@ -264,18 +264,18 @@ struct Poly : public std::vector<MInt<P>> {
             return Poly();
         }
         int n = b.size();
-        std::reverse(b.begin(), b.end());
+        reverse(b.begin(), b.end());
         return ((*this) * b).shift(-(n - 1));
     }
-    constexpr std::vector<Value> eval(std::vector<Value> x) const {
+    constexpr vector<Value> eval(vector<Value> x) const {
         if (this->size() == 0) {
-            return std::vector<Value>(x.size(), 0);
+            return vector<Value>(x.size(), 0);
         }
-        const int n = std::max(x.size(), this->size());
-        std::vector<Poly> q(4 * n);
-        std::vector<Value> ans(x.size());
+        const int n = max(x.size(), this->size());
+        vector<Poly> q(4 * n);
+        vector<Value> ans(x.size());
         x.resize(n);
-        std::function<void(int, int, int)> build = [&](int p, int l, int r) {
+        function<void(int, int, int)> build = [&](int p, int l, int r) {
             if (r - l == 1) {
                 q[p] = Poly{1, -x[l]};
             } else {
@@ -286,7 +286,7 @@ struct Poly : public std::vector<MInt<P>> {
             }
         };
         build(1, 0, n);
-        std::function<void(int, int, int, const Poly &)> work = [&](int p, int l, int r, const Poly &num) {
+        function<void(int, int, int, const Poly &)> work = [&](int p, int l, int r, const Poly &num) {
             if (r - l == 1) {
                 if (l < int(ans.size())) {
                     ans[l] = num[0];
@@ -369,9 +369,9 @@ MInt<P> linearRecurrence(Poly<P> p, Poly<P> q, i64 n) {
 
 struct Comb {
     int n;
-    std::vector<Z> _fac;
-    std::vector<Z> _invfac;
-    std::vector<Z> _inv;
+    vector<Z> _fac;
+    vector<Z> _invfac;
+    vector<Z> _inv;
     
     Comb() : n{0}, _fac{1}, _invfac{1}, _inv{0} {}
     Comb(int n) : Comb() {
@@ -379,7 +379,7 @@ struct Comb {
     }
     
     void init(int m) {
-        m = std::min(m, Z::getMod() - 1);
+        m = min(m, Z::getMod() - 1);
         if (m <= n) return;
         _fac.resize(m + 1);
         _invfac.resize(m + 1);
