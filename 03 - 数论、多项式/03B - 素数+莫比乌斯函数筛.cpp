@@ -1,33 +1,33 @@
 unordered_map<int, Z> fMu;
 
 constexpr int N = 1E7;
-vector<int> minp, primes;
+vector<int> mpf, primes;
 vector<Z> mu;
 
 void sieve(int n) {
-    minp.assign(n + 1, 0);
+    mpf.assign(n + 1, 0);
     mu.resize(n);
     primes.clear();
     
     mu[1] = 1;
     for (int i = 2; i <= n; i++) {
-        if (minp[i] == 0) {
+        if (mpf[i] == 0) {
             mu[i] = -1;
-            minp[i] = i;
+            mpf[i] = i;
             primes.push_back(i);
         }
         
-        for (auto p : primes) {
-            if (i * p > n) {
+        for (auto& pi : primes) {
+            if (i * pi > n) {
                 break;
             }
-            minp[i * p] = p;
-            if (p == minp[i]) {// 若 p 是 i 的最小质因子，则 i * p 存在平方因子，
-                // 故 Möbius 函数值为 0，这里不更新 mu[i * p]，直接退出循环
+            mpf[i * pi] = pi;
+            if (pi == mpf[i]) {// 若 pi 是 i 的最小质因子，则 i * pi 存在平方因子，
+                // 故 Möbius 函数值为 0，这里不更新 mu[i * pi]，直接退出循环
                 break;
             }
-            // 否则，按照 Möbius 函数的乘法性质，更新 mu[i * p] = -mu[i]
-            mu[i * p] = -mu[i];
+            // 否则，按照 Möbius 函数的乘法性质，更新 mu[i * pi] = -mu[i]
+            mu[i * pi] = -mu[i];
         }
     }
     
