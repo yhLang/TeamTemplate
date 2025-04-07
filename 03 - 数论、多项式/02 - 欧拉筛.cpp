@@ -13,11 +13,12 @@ struct Sieve {
                 primes.push_back(i);  // 将 i 加入质数列表
                 mpf[i] = i;           // 质数 i 的最小质因子就是它本身
             }
-            // 对于每个已筛出的质数 primes[j]，将 i * primes[j] 标记为合数，并记录最小质因子
-            for (int j = 0; j < primes.size() and i * primes[j] < n; j++) {
-                mpf[i * primes[j]] = primes[j]; // 更新 i * primes[j] 的最小质因子为 primes[j]
-                // 如果 primes[j] 恰好是 i 的最小质因子，则结束内层循环，保证每个合数只被更新一次
-                if (primes[j] == mpf[i]) {
+            // 对于每个已筛出的质数 pi，将 i * pi 标记为合数，并记录最小质因子
+            for (auto& pi : primes) {
+                if (i * pi > n) {break ;}
+                mpf[i * pi] = pi; // 更新 i * pi 的最小质因子为 pi
+                // 如果 pi 恰好是 i 的最小质因子，则结束内层循环，保证每个合数只被更新一次
+                if (pi == mpf[i]) {
                     break;
                 }
             }
