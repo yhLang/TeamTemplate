@@ -5,14 +5,14 @@ struct MultFunc {//欧拉筛法求积性函数
     vector<int> cnt_mpf; // 最小质因子的次幂数，如果是非完全积性函数才会用到
 
     // 构造函数：初始化筛法，计算所有小于 n 的质数和每个数的最小质因子
-    MultFunc(bool isFei, int _n, function<int(int, int)> calcF) : n(_n), f(_n) {
+    MultFunc(bool isFei, int _n, function<int(int, int)> calcF) : n(_n), f(_n, inf<int>) {
         if (isFei) {cnt_mpf.resize(n);}
         // calcF 是这个积性函数
         // 枚举每个数 i，从 2 开始（1 不是质数）
         f[1] = 1; 
         for (int i = 2; i < n; i++) {
-            // 如果 f[i] 为 0，则 i 还未被筛过，说明 i 为质数
-            if (f[i] == 0) {
+            // 如果 f[i] 为 inf，则 i 还未被筛过，说明 i 为质数
+            if (f[i] == inf<int>) {
                 primes.push_back(i);  // 将 i 加入质数列表
                 f[i] = calcF(i, 1);  // 计算该质数的积性函数
                 if (isFei) {cnt_mpf[i] = 1;}     
