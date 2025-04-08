@@ -106,8 +106,6 @@ public:
         int n = size(a);
         int q = size(queries);
         
-        // 计算数组中元素的最大值，用于构造 lst 数组
-        const auto M = ranges::max(a) + 1;
         
         // 将查询按照右端点 r 升序排序
         auto qry = queries;
@@ -116,8 +114,10 @@ public:
         // 初始化树状数组，大小为 n
         Fenwick<int> bit(n);
         
-        // lst 用于记录每个元素最后一次出现的位置，初始均设为 -1（表示未出现）
-        vector<int> lst(M, -1);
+        // unordered_map<int, int> lst;//如果值域过大
+        
+        const auto M = ranges::max(a) + 1;// 计算数组中元素的最大值，用于构造 lst 数组
+        vector<int> lst(M, -1);// lst 用于记录每个元素最后一次出现的位置，初始均设为 -1（表示未出现）
         
         // 用于存储每个查询的答案，按照查询的 id 放置
         vector<int> res(q);
@@ -130,7 +130,7 @@ public:
             while (R < r) {
                 auto x = a[R];
                 // 若该元素之前出现过，则更新之前位置的贡献（计数减 1）
-                if (lst[x] != -1) {
+                if (lst[x] != -1) {//记得如果是unorderedmap要改称contains
                     bit.modify(lst[x], -1);
                 }
                 // 更新该元素的最后出现位置为 R
