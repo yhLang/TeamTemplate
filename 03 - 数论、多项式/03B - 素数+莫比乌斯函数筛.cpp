@@ -18,16 +18,17 @@ void sieve(int n) {
         }
         
         for (auto& pi : primes) {
-            if (i * pi > n) {
+            const auto now = i * pi;
+            if (now > n) {
                 break;
             }
-            mpf[i * pi] = pi;
-            if (pi == mpf[i]) {// 若 pi 是 i 的最小质因子，则 i * pi 存在平方因子，
-                // 故 Möbius 函数值为 0，这里不更新 mu[i * pi]，直接退出循环
+            mpf[now] = pi;
+            if (pi == mpf[i]) {// 若 pi 是 i 的最小质因子，则 now 存在平方因子，
+                // 故 Möbius 函数值为 0，这里不更新 mu[now]，直接退出循环
                 break;
             }
-            // 否则，按照 Möbius 函数的乘法性质，更新 mu[i * pi] = -mu[i]
-            mu[i * pi] = -mu[i];
+            // 否则，按照 Möbius 函数的乘法性质，更新 mu[now] = -mu[i]
+            mu[now] = -mu[i];
         }
     }
     
