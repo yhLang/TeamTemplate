@@ -1,11 +1,6 @@
 unordered_map<int, Z> fMu;
-
-constexpr int N = 1E7;
-vector<int> mpf, primes;
-vector<Z> mu;
-
 vector<int> primes;
-vector<int> mu;
+vector<Z> mu;
 
 void sieve(int n) {
     mu.resize(n, inf<int>);
