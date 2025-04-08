@@ -1,11 +1,3 @@
-template <class T, class Cmp = greater<T>>
-struct Max {
-    const Cmp cmp = Cmp();
-    constexpr T operator()(const T &a, const T &b) const {
-        return min(a, b, cmp);
-    }
-};
-
 template <class T, class Merge = plus<T>>
 class Fenwick {
     const int n;
@@ -56,6 +48,22 @@ public:
             }
         }
         return x - 1;
+    }
+};
+
+// 实现用于minmax操作的 Merge 函数
+template <class T, class Cmp = greater<T>>
+struct Max {
+    const Cmp cmp = Cmp();
+    constexpr T operator()(const T &a, const T &b) const {
+        return min(a, b, cmp);
+    }
+};
+
+// 实现用于异或操作的 Merge 函数
+struct XorMerge {
+    constexpr int operator()(int a, int b) const {
+        return a ^ b;
     }
 };
 
