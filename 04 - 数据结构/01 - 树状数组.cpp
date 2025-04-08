@@ -1,11 +1,3 @@
-template <class T, class Cmp = greater<T>>
-struct Max {
-    const Cmp cmp = Cmp();
-    constexpr T operator()(const T &a, const T &b) const {
-        return min(a, b, cmp);
-    }
-};
-
 template <class T, class Merge = plus<T>>
 class Fenwick {
     const int n;
@@ -59,6 +51,22 @@ public:
     }
 };
 
+// 实现用于minmax操作的 Merge 函数
+template <class T, class Cmp = greater<T>>
+struct Max {
+    const Cmp cmp = Cmp();
+    constexpr T operator()(const T &a, const T &b) const {
+        return min(a, b, cmp);
+    }
+};
+
+// 实现用于异或操作的 Merge 函数
+struct XorMerge {
+    constexpr int operator()(int a, int b) const {
+        return a ^ b;
+    }
+};
+
 /*
 求逆序对
 */
@@ -98,41 +106,41 @@ public:
         int n = size(a);
         int q = size(queries);
         
-        // 计算数组中元素的最大值，用于构造 lastOccurrence 数组
-        const auto M = ranges::max(a) + 1;
         
         // 将查询按照右端点 r 升序排序
-        auto sortedQueries = queries;
-        sort(begin(sortedQueries), end(sortedQueries));
+        auto qry = queries;
+        sort(begin(qry), end(qry));
         
         // 初始化树状数组，大小为 n
-        Fenwick<int> fwk(n);
+        Fenwick<int> bit(n);
         
-        // lastOccurrence 用于记录每个元素最后一次出现的位置，初始均设为 -1（表示未出现）
-        vector<int> lastOccurrence(M, -1);
+        // unordered_map<int, int> lst;//如果值域过大
+        
+        const auto M = ranges::max(a) + 1;// 计算数组中元素的最大值，用于构造 lst 数组
+        vector<int> lst(M, -1);// lst 用于记录每个元素最后一次出现的位置，初始均设为 -1（表示未出现）
         
         // 用于存储每个查询的答案，按照查询的 id 放置
-        vector<int> res(q, 0);
+        vector<int> res(q);
         
-        // currentRight 表示当前处理到的右端点
-        int currentRight{};
+        // R 表示当前处理到的右端点
+        int R{};
         // 依次处理排序后的每个查询
-        for (const auto&[l, r, id] : sortedQueries) {
-            // 将 currentRight 移动到查询的右端点 r（区间 [l, r)）
-            while (currentRight < r) {
-                auto value = a[currentRight];
+        for (const auto&[l, r, id] : qry) {
+            // 将 R 移动到查询的右端点 r（区间 [l, r)）
+            while (R < r) {
+                auto x = a[R];
                 // 若该元素之前出现过，则更新之前位置的贡献（计数减 1）
-                if (lastOccurrence[value] != -1) {
-                    fwk.add(lastOccurrence[value], -1);
+                if (lst[x] != -1) {//记得如果是unorderedmap要改称contains
+                    bit.modify(lst[x], -1);
                 }
-                // 更新该元素的最后出现位置为 currentRight
-                lastOccurrence[value] = currentRight;
+                // 更新该元素的最后出现位置为 R
+                lst[x] = R;
                 // 在当前下标位置上加 1
-                fwk.add(currentRight, 1);
-                currentRight++;
+                bit.modify(R, 1);
+                R++;
             }
-            // 查询区间 [l, r) 内的不同元素个数，即为 fwk 在该区间的和
-            res[id] = fwk.rangeSum(l, r);
+            // 查询区间 [l, r) 内的不同元素个数，即为 bit 在该区间的和
+            res[id] = bit.rangeQuery(l, r);
         }
         
         return res;
