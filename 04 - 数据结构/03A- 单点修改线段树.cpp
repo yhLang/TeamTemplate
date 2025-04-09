@@ -1,109 +1,92 @@
-template<class Info>
+template <class Info>
 struct SegmentTree {
-    int n;
+    const int n;
     vector<Info> info;
-    SegmentTree() : n(0) {}
-    SegmentTree(int n, Info v = Info()) {
-        build(n, v);
-    }
-    template<class T>
-    SegmentTree(vector<T> init) {
-        build(init); 
-    }
-    void build(int n, Info v = Info()) {
-        build(vector(n, v));
-    }
-    template<class T>
-    void build(vector<T> init) {
-        n = init.size();
-        info.assign(4 << __lg(n), Info());
-        function<void(int, int, int)> go = [&](int p, int l, int r) {
+    SegmentTree(int n): n(n), info(4 << __lg(n)) {}
+template <typename T>
+    SegmentTree(vector<T> init) : SegmentTree(init.size()) {
+        auto go = [&](auto go, int id, int l, int r) -> void {
             if (r - l == 1) {
-                info[p] = init[l];
+                info[id] = {init[l]};
                 return;
             }
-            int m = (l + r) / 2;
-            go(2 * p, l, m);
-            go(2 * p + 1, m, r);
-            pull(p);
+            int m = l + r >> 1;
+            go(go, 2 * id, l, m);
+            go(go, 2 * id + 1, m, r);
+            pull(id);
         };
-        go(1, 0, n);
+        go(go, 1, 0, n);
     }
-    void pull(int p) {
-        info[p] = info[2 * p] + info[2 * p + 1];
-    }
-    void modify(int p, int l, int r, int x, const Info &v) {
-        if (r - l == 1) {
-            info[p] = v;
-            return;
-        }
-        int m = (l + r) / 2;
-        if (x < m) {
-            modify(2 * p, l, m, x, v);
-        } else {
-            modify(2 * p + 1, m, r, x, v);
-        }
-        pull(p);
+    void pull(int id) {
+        info[id] = info[2 * id] + info[2 * id + 1];
     }
     void modify(int p, const Info &v) {
-        modify(1, 0, n, p, v);
+        auto go = [&](auto go, int id, int l, int r) -> void {
+            if (r - l == 1) {
+                info[id] = v;
+                return;
+            }
+            int m = l + r >> 1;
+            p < m ? go(go, 2 * id, l, m) : go(go, 2 * id + 1, m, r);
+            pull(id);
+        };
+        go(go, 1, 0, n);
     }
-    Info rangeQuery(int p, int l, int r, int x, int y) {
-        if (l >= y || r <= x) {
-            return Info();
-        }
-        if (l >= x && r <= y) {
-            return info[p];
-        }
-        int m = (l + r) / 2;
-        return rangeQuery(2 * p, l, m, x, y) + rangeQuery(2 * p + 1, m, r, x, y);
+    Info rangeQuery(int ql, int qr) {
+        auto go = [&](auto go, int id, int l, int r) -> Info {
+            if (qr <= l or r <= ql) {
+                return Info();
+            }
+            if (ql <= l and r <= qr) {
+                return info[id];
+            }
+            int m = l + r >> 1;
+            return go(go, 2 * id, l, m) + go(go, 2 * id + 1, m, r);
+        };
+        return go(go, 1, 0, n);
     }
-    Info rangeQuery(int l, int r) {
-        return rangeQuery(1, 0, n, l, r);
+template <typename F>
+    int findFirst(int ql, int qr, F f) {
+        auto go = [&](auto go, int id, int l, int r) -> int {
+            if (qr <= l or r <= ql or !f(info[id])) {
+                return -1;
+            }
+            if (r - l == 1) {
+                return l;
+            }
+            int m = l + r >> 1;
+            int res = go(go, 2 * id, l, m);
+            if (res == -1) {
+                res = go(go, 2 * id + 1, m, r);
+            }
+            return res;
+        };
+        return go(go, 1, 0, n);
     }
-    template<class F>
-    int findFirst(int p, int l, int r, int x, int y, F &&pred) {
-        if (l >= y || r <= x) {
-            return -1;
-        }
-        if (l >= x && r <= y && !pred(info[p])) {
-            return -1;
-        }
-        if (r - l == 1) {
-            return l;
-        }
-        int m = (l + r) / 2;
-        int res = findFirst(2 * p, l, m, x, y, pred);
-        if (res == -1) {
-            res = findFirst(2 * p + 1, m, r, x, y, pred);
-        }
-        return res;
-    }
-    template<class F>
-    int findFirst(int l, int r, F &&pred) {
-        return findFirst(1, 0, n, l, r, pred);
-    }
-    template<class F>
-    int findLast(int p, int l, int r, int x, int y, F &&pred) {
-        if (l >= y || r <= x) {
-            return -1;
-        }
-        if (l >= x && r <= y && !pred(info[p])) {
-            return -1;
-        }
-        if (r - l == 1) {
-            return l;
-        }
-        int m = (l + r) / 2;
-        int res = findLast(2 * p + 1, m, r, x, y, pred);
-        if (res == -1) {
-            res = findLast(2 * p, l, m, x, y, pred);
-        }
-        return res;
-    }
-    template<class F>
-    int findLast(int l, int r, F &&pred) {
-        return findLast(1, 0, n, l, r, pred);
+template <typename F>
+    int findLast(int ql, int qr, F f) {
+        auto go = [&](auto go, int id, int l, int r) -> int {
+            if (qr <= l or r <= ql or !f(info[id])) {
+                return -1;
+            }
+            if (r - l == 1) {
+                return l;
+            }
+            int m = l + r >> 1;
+            int res = go(go, 2 * id + 1, m, r);
+            if (res == -1) {
+                res = go(go, 2 * id, l, m);
+            }
+            return res;
+        };
+        return go(go, 1, 0, n);
     }
 };
-
+ 
+struct Max {
+    int x = 0;
+};
+ 
+Max operator+(Max a, Max b) {
+    return {max(a.x, b.x)};
+}
