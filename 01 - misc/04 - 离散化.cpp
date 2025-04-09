@@ -1,10 +1,10 @@
 template <class T>
 struct Discreter {
-    vector<T> elementSet;
+    vector<T> lsh;
 
-    Discreter(const vector<T> &a) : elementSet(a) {
-        sort(begin(elementSet), end(elementSet));
-        elementSet.erase(unique(begin(elementSet), end(elementSet)), end(elementSet));
+    Discreter(const vector<T> &a) : lsh(a) {
+        sort(begin(lsh), end(lsh));
+        lsh.erase(unique(begin(lsh), end(lsh)), end(lsh));
     }
 
     vector<int> process(const vector<T> &a) const {//get the dicreter arr
@@ -18,23 +18,23 @@ struct Discreter {
     }
 
     int query(const T &x) const {
-        auto it = lower_bound(begin(elementSet), end(elementSet), x);
-        // assert(it != end(elementSet) and *it == x);
+        auto it = lower_bound(begin(lsh), end(lsh), x);
+        // assert(it != end(lsh) and *it == x);
 
-        return it - begin(elementSet);
+        return distance(begin(lsh), it);
     }
 
     int queryUpperBound(const T &x) const {
-        auto it = upper_bound(begin(elementSet), end(elementSet), x);
+        auto it = upper_bound(begin(lsh), end(lsh), x);
 
-        return it - begin(elementSet);
+        return distance(begin(lsh), it);
     }
 
-    T queryInv(int index) const {
-        return elementSet[index];
+    T queryInv(int i) const {
+        return lsh[i];
     }
 
     int size() {
-        return elementSet.size();
+        return lsh.size();
     }
 };
