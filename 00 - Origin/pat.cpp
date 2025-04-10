@@ -5,8 +5,7 @@ using namespace std;
 template <class F, class S>
 ostream& operator<<(ostream& s, const pair<F, S>& v)
 {
-    s << "(" << v.first << ", " << v.second << ")";
-    return s;
+    return s << "(" << v.first << ", " << v.second << ")";
 }
 template <ranges::range T>
     requires(!is_convertible_v<T, string_view>)
@@ -38,11 +37,11 @@ void dbg(T... x)
 #endif
 
 template <class T>
-inline constexpr T INF = numeric_limits<T>::max() / 2;
+inline constexpr T inf = numeric_limits<T>::max() / 2;
 template <class T>
 bool chmin(T& a, T b) { return (b < a) and (a = b, true); }
 template <class T>
-bool chmax(T& a, T b) { return (a < b) and (a = b, true); }
+bool chmax(T& a, T b) { return (b > a) and (a = b, true); }
 
 using u32 = uint32_t;
 using i64 = int64_t;
