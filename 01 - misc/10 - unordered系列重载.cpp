@@ -17,6 +17,7 @@ struct HashPair {
         return seed;
     }
 };
+unordered_set<pair<int, int>, HashPair> pairSet;
 
 // tuple 的哈希函数，通过 apply 展开所有元素，再调用 hashMerge
 struct HashTuple {
@@ -29,6 +30,7 @@ struct HashTuple {
         return seed;
     }
 };
+unordered_set<tuple<int, int, int>, HashTuple> tupleSet;
 
 // 2. 自定义结构体 AC 与哈希函数
 
@@ -48,6 +50,7 @@ struct HashAC {
         return seed;
     }
 };
+unordered_set<AC, HashAC> acSet;
 
 // 3. 模板化的 vector 哈希函数
 
@@ -61,3 +64,4 @@ struct HashVector {
         return seed;
     }
 };
+HashVector<int>> vecIntSet;
