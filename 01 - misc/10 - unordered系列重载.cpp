@@ -64,4 +64,4 @@ struct HashVector {
         return seed;
     }
 };
-HashVector<int>> vecIntSet;
+unordered_set<vector<int>, HashVector<int>> vecIntSet;
