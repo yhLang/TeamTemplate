@@ -50,9 +50,6 @@ using i128 = __int128_t;
 
 signed main()
 {
-    cin.tie(nullptr)->sync_with_stdio(false);
-    cin.exceptions(cin.failbit);
-
     auto solve = [&]() {
 
     };
@@ -65,3 +62,10 @@ signed main()
 
     return 0;
 }
+
+auto IO = []() {
+    cin.tie(nullptr)->sync_with_stdio(false);
+    cin.exceptions(cin.failbit);
+    cout << fixed << setprecision(12);
+    return 0;
+}();

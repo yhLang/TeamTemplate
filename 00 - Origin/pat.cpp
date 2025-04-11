@@ -50,9 +50,6 @@ using i128 = __int128_t;
 
 signed main()
 {
-    cin.tie(nullptr)->sync_with_stdio(false);
-    cin.exceptions(cin.failbit);
-
     auto solve = [&]() {
         const int N { 100'000 };
         system("g++ -std=c++20 brt.cpp -o brt"); // bruteforce
@@ -78,3 +75,10 @@ signed main()
 
     return 0;
 }
+
+auto IO = []() {
+    cin.tie(nullptr)->sync_with_stdio(false);
+    cin.exceptions(cin.failbit);
+    cout << fixed << setprecision(12);
+    return 0;
+}();
