@@ -10,7 +10,7 @@ class TopSort {
 public:
     template <class T>
     vector<int> operator()(const vector<T> &e) const {
-        int n = e.size();
+        int n = size(e);
         vector<int> ind(n);
         for (int x = 0; x < n; x++) {
             for (auto p : e[x]) {
@@ -26,7 +26,7 @@ public:
         }
 
         vector<int> res;
-        while (!q.empty()) {
+        while (not empty(q)) {
             int x = q.back();
             res.push_back(x);
             q.pop_back();

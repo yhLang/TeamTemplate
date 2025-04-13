@@ -27,7 +27,7 @@ vector<int> bipartiteVertexColoring(vector<vector<int>>& adj) {
     //  - 将其代表染成颜色 0
     //  - 将对应对立身份（u+n所在集合）染成颜色 1
     for (int u = 0; u < n; ++u) {
-        if (dsu.find(u) == u && color[dsu.find(u)] < 0) {
+        if (dsu.find(u) == u and color[dsu.find(u)] < 0) {
             color[dsu.find(u)] = 0;
             color[dsu.find(u + n)] = 1;
         }

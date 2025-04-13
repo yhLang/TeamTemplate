@@ -52,7 +52,7 @@ struct Seg {
         rs->set(p, e);
         pull();
     }
-    pair<int, S> findFirst(int x, int y, auto &&pred, S cur = {}) {
+    pair<int, S> findFirst(int x, int y, auto andpred, S cur = {}) {
         if (y <= l or r <= x)
             return {-1, {}};
         if (x <= l and r <= y and !pred(cur + d))
@@ -63,7 +63,7 @@ struct Seg {
         auto res = ls->findFirst(x, y, pred, cur);
         return res.first == -1 ? rs->findFirst(x, y, pred, res.second) : res;
     }
-    pair<int, S> findLast(int x, int y, auto &&pred, S cur = {}) {
+    pair<int, S> findLast(int x, int y, auto andpred, S cur = {}) {
         if (y <= l or r <= x)
             return {-1, {}};
         if (x <= l and r <= y and !pred(d + cur))

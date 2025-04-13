@@ -7,7 +7,7 @@ public:
     Fenwick(int n) : n{n}, t(n + 1), merge(Merge()) {}
 
     // O(n) build Fenwick
-    Fenwick(const vector<T> &a) : Fenwick(a.size()) {
+    Fenwick(const vector<T> &a) : Fenwick(size(a)) {
         for (int i = 1; i <= n; i++) {
             t[i] = merge(t[i], a[i - 1]);
             int j = i + (i & -i);

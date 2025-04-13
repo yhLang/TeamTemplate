@@ -2,8 +2,8 @@ template<class T>
 struct MaxAssignment {
     public:
         T solve(int nx, int ny, vector<vector<T>> a) {
-            assert(0 <= nx && nx <= ny);
-            assert(int(a.size()) == nx);
+            assert(0 <= nx and nx <= ny);
+            assert(int(size(a)) == nx);
             for (int i = 0; i < nx; ++i) {
                 assert(int(a[i].size()) == ny);
                 for (auto x : a[i])
@@ -44,11 +44,11 @@ struct MaxAssignment {
                 int ex, ey;
                 bool found = false;
                 while (!found) {
-                    while (!que.empty() && !found) {
+                    while (!que.empty() and !found) {
                         auto x = que.front();
                         que.pop();
                         for (int y = 0; y < ny; ++y) {
-                            if (a[x][y] == lx[x] + ly[y] && !visy[y]) {
+                            if (a[x][y] == lx[x] + ly[y] and !visy[y]) {
                                 if (yx[y] == -1) {
                                     ex = x;
                                     ey = y;
@@ -80,7 +80,7 @@ struct MaxAssignment {
                         }
                     }
                     for (int y = 0; y < ny; ++y) {
-                        if (!visy[y] && slack[y] == 0) {
+                        if (!visy[y] and slack[y] == 0) {
                             if (yx[y] == -1) {
                                 ex = slackx[y];
                                 ey = y;

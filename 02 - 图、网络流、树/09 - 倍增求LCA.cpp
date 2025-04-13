@@ -12,7 +12,7 @@ public:
     }
  
     void init(const Adj& g, int root) {
-        m_num = static_cast<int>(g.size());
+        m_num = static_cast<int>(size(g));
         m_root = root;
  
         m_lognum = 1;

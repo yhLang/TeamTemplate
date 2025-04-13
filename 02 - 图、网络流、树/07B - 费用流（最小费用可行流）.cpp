@@ -32,14 +32,14 @@ struct MCFGraph {
     MCFGraph(int n) : n(n), g(n) {}
     void addEdge(int u, int v, int c, int f) {
         if (f < 0) {
-            g[u].push_back(e.size());
+            g[u].push_back(size(e));
             e.emplace_back(v, 0, f);
-            g[v].push_back(e.size());
+            g[v].push_back(size(e));
             e.emplace_back(u, c, -f);
         } else {
-            g[u].push_back(e.size());
+            g[u].push_back(size(e));
             e.emplace_back(v, c, f);
-            g[v].push_back(e.size());
+            g[v].push_back(size(e));
             e.emplace_back(u, 0, -f);
         }
     }

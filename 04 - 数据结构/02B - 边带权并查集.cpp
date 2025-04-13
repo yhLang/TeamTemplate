@@ -5,8 +5,8 @@ struct DSU {
     vector<T> w;
 
     DSU(int n) : f(n), size(n), w(n) {
-        iota(f.begin(), f.end(), 0);
-        fill(size.begin(), size.end(), 1);
+        iota(begin(f), end(f), 0);
+        fill(begin(size), end(size), 1);
     }
 
     int find(int x) {

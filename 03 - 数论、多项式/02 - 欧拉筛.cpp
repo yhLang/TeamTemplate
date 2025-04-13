@@ -97,7 +97,7 @@ struct Sieve {
         // 对于每个质因子及其指数
         for (auto [d, cnt] : ps) {
             // 记录当前 ds 的区间边界
-            int l = 0, r = ds.size();
+            int l = 0, r = dsize(s);
             // 对每个质因子 d，重复乘上 d 共 cnt 次
             while (cnt--) {
                 // 枚举当前已有的所有因子，并将它们乘以 d 后加入 ds 中
@@ -105,7 +105,7 @@ struct Sieve {
                     ds.push_back(ds[k] * d);
                 }
                 // 更新区间边界，确保下一次只扩展新加入的因子
-                l = r, r = ds.size();
+                l = r, r = dsize(s);
             }
         }
 

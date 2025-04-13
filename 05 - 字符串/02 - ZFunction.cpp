@@ -1,5 +1,5 @@
 vector<int> ZFunction(string s) {
-    int n = s.size();
+    int n = size(s);
     vector<int> z(n + 1);
     z[0] = n;
     for (int i = 1, j = 1; i < n; i++) {

@@ -20,7 +20,7 @@ struct PollardRho : public MillerRabin<T> {
             do {
                 for (int i = 0; i < 128; i++) {
                     t = f(t), r = f(f(r));
-                    if (t == r || (q = super.mulp(p, abs(t - r), n)) == 0)
+                    if (t == r or (q = super.mulp(p, abs(t - r), n)) == 0)
                         break;
                     p = q;
                 }

@@ -3,8 +3,8 @@ struct StringHash {
     vector<array<int, D>> h;
 
     template <class T>
-    StringHash(const T &s) : h(s.size() + 1) {
-        for (int i = 0; i < s.size(); i++) {
+    StringHash(const T &s) : h(size(s) + 1) {
+        for (int i = 0; i < size(s); i++) {
             for (int k = 0; k < D; k++) {
                 h[i + 1][k] = (1ll * h[i][k] * B[k] + s[i] + 1) % P[k];
             }

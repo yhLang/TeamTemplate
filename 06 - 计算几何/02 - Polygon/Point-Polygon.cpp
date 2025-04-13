@@ -16,8 +16,8 @@ public:
     string operator()(Point a, const PS &ps) const {
         int res = 0;
         Vector b = {1 << 30, a.y};
-        for (int i = 0; i < ps.size(); i++) {
-            int j = (i + 1) % ps.size();
+        for (int i = 0; i < psize(s); i++) {
+            int j = (i + 1) % psize(s);
             if (onSeg(a, ps[i], ps[j]))
                 return "ON";
             res += isCross(a, b, ps[i], ps[j]);
@@ -31,14 +31,14 @@ const InPoly inPoly;
 string inConvex(Point a, const PS &ps) {
     if (a == ps[0])
         return "ON";
-    if (ps.size() <= 1)
+    if (psize(s) <= 1)
         return "OUT";
-    if (ps.size() == 2)
+    if (psize(s) == 2)
         return onSeg(a, ps[0], ps[1]) ? "ON" : "OUT";
     auto v = a - ps[0];
     if ((ps[1] - ps[0]).cross(v) < 0 or (ps.back() - ps[0]).cross(v) > 0)
         return "OUT";
-    int l = 1, r = ps.size() - 1;
+    int l = 1, r = psize(s) - 1;
     while (l + 1 < r) {
         auto mid = l + r >> 1;
         auto res = (ps[mid] - ps[0]).cross(v);

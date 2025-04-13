@@ -7,7 +7,7 @@ class RMQ {
     vector<vector<T>> jump;
 public:
     constexpr RMQ(const vector<T> &a)
-        : n{(int)a.size()}, logn{__lg(n)}, jump(logn + 1) {
+        : n{(int)size(a)}, logn{__lg(n)}, jump(logn + 1) {
 
         jump[0] = a;
 

@@ -4,7 +4,7 @@ constexpr int L = 10000;
 int fac[L + 1], invfac[L + 1];
 
 int binom(int n, int m) {
-    if (n < m || m < 0) {
+    if (n < m or m < 0) {
         return 0;
     }
     return 1LL * fac[n] * invfac[m] % P * invfac[n - m] % P;

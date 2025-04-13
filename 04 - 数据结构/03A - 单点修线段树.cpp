@@ -4,7 +4,7 @@ struct SegmentTree {
     vector<Info> info;
     SegmentTree(int n): n(n), info(4 << __lg(n)) {}
 template <typename T>
-    SegmentTree(vector<T> init) : SegmentTree(init.size()) {
+    SegmentTree(vector<T> init) : SegmentTree(inisize(t)) {
         auto go = [&](auto go, int id, int l, int r) -> void {
             if (r - l == 1) {
                 info[id] = {init[l]};

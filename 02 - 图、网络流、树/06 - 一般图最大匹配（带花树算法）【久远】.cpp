@@ -47,7 +47,7 @@ struct Graph {
             while (!que.empty())
                 que.pop();
             
-            iota(f.begin(), f.end(), 0);
+            iota(begin(f), end(f), 0);
             
             // vis = 0 corresponds to inner vertices, vis = 1 corresponds to outer vertices
             fill(vis.begin(), vis.end(), -1);
@@ -80,7 +80,7 @@ struct Graph {
                         dep[match[v]] = dep[u] + 2;
                         que.push(match[v]);
                         
-                    } else if (vis[v] == 1 && find(v) != find(u)) {
+                    } else if (vis[v] == 1 and find(v) != find(u)) {
                         // found a blossom
                         int p = lca(u, v);
                         blossom(u, v, p);

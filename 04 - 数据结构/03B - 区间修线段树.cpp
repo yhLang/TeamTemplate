@@ -5,7 +5,7 @@ struct LazySegmentTree {
     vector<Tag> tag;
     LazySegmentTree(int n) : n(n), info(4 << __lg(n)), tag(4 << __lg(n)) {}
     LazySegmentTree(vector<Info> init) : 
-    LazySegmentTree(init.size()) {
+    LazySegmentTree(inisize(t)) {
         auto go = [&](auto go, int id, int l, int r) -> void {
             if (r - l == 1) {
                 info[id] = init[l];
@@ -79,7 +79,7 @@ struct LazySegmentTree {
     }
 
     template<class F>
-    int findFirst(int ql, int qr, F &&pred) {
+    int findFirst(int ql, int qr, F andpred) {
         auto go = [&](auto go, int id, int l, int r) -> int {
             if (qr <= l or r <= ql or !f(info[id])) {
                 return -1;
@@ -99,7 +99,7 @@ struct LazySegmentTree {
     }
 
     template<class F>
-    int findLast(int ql, int qr, F &&pred) {
+    int findLast(int ql, int qr, F andpred) {
         auto go = [&](auto go, int id, int l, int r) -> int {
             if (qr <= l or r <= ql or !f(info[id])) {
                 return -1;

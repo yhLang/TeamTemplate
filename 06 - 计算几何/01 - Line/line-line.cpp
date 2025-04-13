@@ -54,5 +54,5 @@ bool noIntersection(int x1, int y1, int x2, int y2,
     // 2. A 在 B 的右侧 (A 的左边界 >= B 的右边界)
     // 3. A 在 B 的下方 (A 的上边界 <= B 的下边界)
     // 4. A 在 B 的上方 (A 的下边界 >= B 的上边界)
-    return x2 <= x3 || x4 <= x1 || y2 <= y3 || y4 <= y1;
+    return x2 <= x3 or x4 <= x1 or y2 <= y3 or y4 <= y1;
 }

@@ -17,7 +17,7 @@ struct SAM {
     }
     int newNode() {
         t.emplace_back();
-        return t.size() - 1;
+        return size(t) - 1;
     }
     int extend(int p, int c) {
         if (t[p].next[c]) {
@@ -66,7 +66,7 @@ struct SAM {
     }
     
     int size() {
-        return t.size();
+        return size(t);
     }
 };
 

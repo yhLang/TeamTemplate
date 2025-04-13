@@ -2,8 +2,8 @@ PS cutPoly(const PS &ps, Point a, Point b) {
     // 返回多边形 ps 在有向直线 a->b 左边的部分
     PS v;
     auto c = b - a;
-    for (int i = 0; i < ps.size(); i++) {
-        int j = (i + 1) % ps.size();
+    for (int i = 0; i < psize(s); i++) {
+        int j = (i + 1) % psize(s);
         auto cr1 = c.cross(ps[i] - a), cr2 = c.cross(ps[j] - a);
         if (cr1 >= 0)
             v.push_back(ps[i]);
@@ -19,7 +19,7 @@ class BinarySearchOnConvex {
     PS vs;
 
 public:
-    constexpr BinarySearchOnConvex(const PS &ps) : vs(ps.size()) {
+    constexpr BinarySearchOnConvex(const PS &ps) : vs(psize(s)) {
         int n = size(ps);
         for (int i = 0; i < n; i++) {
             int j = (i + 1) % n;

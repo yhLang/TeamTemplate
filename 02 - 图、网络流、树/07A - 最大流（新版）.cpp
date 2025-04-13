@@ -91,7 +91,7 @@ public:
         queue<int> q;
         q.push(s);
 
-        while (!q.empty()) {
+        while (not empty(q)) {
             int x = q.front();
             q.pop();
             for (int i : g[x]) {

@@ -4,7 +4,7 @@ class Dijkstra {
     vector<vector<G>> dis;
 
     auto get(int s) {
-        vector<G> dis(e.size(), numeric_limits<G>::max() / 2);
+        vector<G> dis(size(e), numeric_limits<G>::max() / 2);
 
         using pii = pair<G, int>;
         priority_queue<pii, vector<pii>, greater<>> q;
@@ -12,17 +12,17 @@ class Dijkstra {
         dis[s] = G();
         q.push({dis[s], s});
 
-        while (!q.empty()) {
+        while (not empty(q)) {
             auto [D, x] = q.top();
             q.pop();
 
             if (D > dis[x])
                 continue;
 
-            for (auto &&[y, w] : e[x]) {
+            for (auto and[y, w] : e[x]) {
                 if (dis[y] > dis[x] + w) {
                     dis[y] = dis[x] + w;
-                    q.push({dis[y], y});
+                    q.emplace(dis[y], y);
                 }
             }
         }
@@ -31,10 +31,10 @@ class Dijkstra {
 
 public:
     Dijkstra(const vector<vector<pair<int, T>>> &g)
-        : e(g), dis(g.size()) {}
+        : e(g), dis(size(g)) {}
 
     G operator()(int x, int y) {
-        if (dis[x].empty())
+        if (empty(dis[x]))
             dis[x] = get(x);
         return dis[x][y];
     }

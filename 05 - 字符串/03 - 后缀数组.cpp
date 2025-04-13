@@ -31,14 +31,14 @@ struct SuffixArray {
             swap(rk, tmp);
             rk[sa[0]] = 0;
             for (int i = 1; i < n; ++i)
-                rk[sa[i]] = rk[sa[i - 1]] + (tmp[sa[i - 1]] < tmp[sa[i]] || sa[i - 1] + k == n || tmp[sa[i - 1] + k] < tmp[sa[i] + k]);
+                rk[sa[i]] = rk[sa[i - 1]] + (tmp[sa[i - 1]] < tmp[sa[i]] or sa[i - 1] + k == n or tmp[sa[i - 1] + k] < tmp[sa[i] + k]);
             k *= 2;
         }
         for (int i = 0, j = 0; i < n; ++i) {
             if (rk[i] == 0) {
                 j = 0;
             } else {
-                for (j -= j > 0; i + j < n && sa[rk[i] - 1] + j < n && s[i + j] == s[sa[rk[i] - 1] + j]; )
+                for (j -= j > 0; i + j < n and sa[rk[i] - 1] + j < n and s[i + j] == s[sa[rk[i] - 1] + j]; )
                     ++j;
                 lc[rk[i] - 1] = j;
             }

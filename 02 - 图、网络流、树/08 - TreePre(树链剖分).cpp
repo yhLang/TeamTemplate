@@ -50,7 +50,7 @@ public:
     int cur = 0;
 
     TreePre(const vector<vector<T>> &g, int root)
-        : adj(g), n{g.size()}, root{root}, big(n, -1), size(n, 1),
+        : adj(g), n{size(g)}, root{root}, big(n, -1), size(n, 1),
           tp(n), dep(n), fa(n), dfn(n), idfn(n) {
         // dep begin from 0
         // dep[root] = 0;

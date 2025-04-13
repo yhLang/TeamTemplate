@@ -18,7 +18,7 @@ class PresidentTree {
 
     constexpr NodeIndex newNode(int val = 0) {
         t.emplace_back(val);
-        return (int)t.size() - 1;
+        return (int)size(t) - 1;
     }
 
     constexpr void up(NodeIndex i) {
@@ -79,13 +79,13 @@ class PresidentTree {
 
 public:
     constexpr PresidentTree(const vector<T> &a, T min, T max)
-        : root(a.size() + 1), Start(min), Last(max + 1), t(1) {
+        : root(size(a) + 1), Start(min), Last(max + 1), t(1) {
 
-        t.reserve(a.size() * __lg(a.size() * 2));
+        t.reserve(size(a) * __lg(size(a) * 2));
 
         root[0] = newNode();
-        for (int i = 1; i <= a.size(); i++) {
-            if (t.capacity() <= t.size() + 64) {
+        for (int i = 1; i <= size(a); i++) {
+            if (t.capacity() <= size(t) + 64) {
                 t.reserve(max(2 * t.capacity(), t.capacity() + 64));
             }
             modify(root[i], Start, Last, a[i - 1]);

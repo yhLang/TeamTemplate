@@ -8,9 +8,9 @@ struct Discreter {
     }
 
     vector<int> process(const vector<T> &a) const {//get the dicreter arr
-        vector<int> discRes(a.size());
+        vector<int> discRes(size(a));
 
-        for (int i = 0; i < a.size(); i++) {
+        for (int i = 0; i < size(a); i++) {
             discRes[i] = query(a[i]);
         }
 

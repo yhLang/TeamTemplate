@@ -39,7 +39,7 @@ struct AC {
     int z;
 
     bool operator==(const AC &other) const {//自定义什么是相等
-        return x == other.x && y == other.y && z == other.z;
+        return x == other.x and y == other.y and z == other.z;
     }
 };
 
@@ -57,7 +57,7 @@ unordered_set<AC, HashAC> acSet;
 template <typename T>
 struct HashVector {
     size_t operator()(const vector<T>& a) const {
-        size_t seed = a.size();  // 使用 vector 大小作为初始值
+        size_t seed = size(a);  // 使用 vector 大小作为初始值
         for (const auto &ai : a) {
             hashMerge(seed, ai);
         }

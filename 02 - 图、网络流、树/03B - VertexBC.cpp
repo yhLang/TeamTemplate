@@ -31,8 +31,8 @@ public:
     int componentNum = 0;
 
     VertexBC(const vector<vector<int>> &e)
-        : e(e), dfn(e.size(), -1), low(e.size()), cutDeg(e.size()) {
-        int n = e.size();
+        : e(e), dfn(size(e), -1), low(size(e)), cutDeg(size(e)) {
+        int n = size(e);
 
         for (int i = 0; i < n; i++) {
             if (dfn[i] == -1) {

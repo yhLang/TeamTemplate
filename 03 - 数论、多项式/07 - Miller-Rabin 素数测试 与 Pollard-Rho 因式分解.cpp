@@ -18,7 +18,7 @@ bool isprime(i64 n) {//大数素性测试
         if (a == n)
             return true;
         i64 x = power(a, d, n);
-        if (x == 1 || x == n - 1)
+        if (x == 1 or x == n - 1)
             continue;
         bool ok = false;
         for (int i = 0; i < s - 1; ++i) {
@@ -97,7 +97,7 @@ vector<i64> GetDivisors(const vector<i64>& factors) {
     vector<factor> fac_cnt(cnt.begin(), cnt.end());
     vector<i64> divisors = {1};
     for (auto &p : fac_cnt) {
-        int sz = divisors.size();
+        int sz = divisorsize(s);
         for (int i = 0; i < sz; i++) {
             i64 cur = divisors[i];
             for (int j = 0; j < p.second; j++) {

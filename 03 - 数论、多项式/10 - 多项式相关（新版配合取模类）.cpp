@@ -23,7 +23,7 @@ constexpr MInt<998244353> primitiveRoot<998244353> {31};
 
 template<int P>
 constexpr void dft(vector<MInt<P>> &a) {
-    int n = a.size();
+    int n = size(a);
     
     if (int(rev.size()) != n) {
         int k = __builtin_ctz(n) - 1;
@@ -64,7 +64,7 @@ constexpr void dft(vector<MInt<P>> &a) {
 
 template<int P>
 constexpr void idft(vector<MInt<P>> &a) {
-    int n = a.size();
+    int n = size(a);
     reverse(a.begin() + 1, a.end());
     dft(a);
     MInt<P> inv = (1 - P) / n;
@@ -110,8 +110,8 @@ struct Poly : public vector<MInt<P>> {
         return f;
     }
     constexpr friend Poly operator+(const Poly &a, const Poly &b) {
-        Poly res(max(a.size(), b.size()));
-        for (int i = 0; i < a.size(); i++) {
+        Poly res(max(size(a), b.size()));
+        for (int i = 0; i < size(a); i++) {
             res[i] += a[i];
         }
         for (int i = 0; i < b.size(); i++) {
@@ -120,8 +120,8 @@ struct Poly : public vector<MInt<P>> {
         return res;
     }
     constexpr friend Poly operator-(const Poly &a, const Poly &b) {
-        Poly res(max(a.size(), b.size()));
-        for (int i = 0; i < a.size(); i++) {
+        Poly res(max(size(a), b.size()));
+        for (int i = 0; i < size(a); i++) {
             res[i] += a[i];
         }
         for (int i = 0; i < b.size(); i++) {
@@ -130,26 +130,26 @@ struct Poly : public vector<MInt<P>> {
         return res;
     }
     constexpr friend Poly operator-(const Poly &a) {
-        vector<Value> res(a.size());
-        for (int i = 0; i < int(res.size()); i++) {
+        vector<Value> res(size(a));
+        for (int i = 0; i < int(resize(s)); i++) {
             res[i] = -a[i];
         }
         return Poly(res);
     }
     constexpr friend Poly operator*(Poly a, Poly b) {
-        if (a.size() == 0 || b.size() == 0) {
+        if (size(a) == 0 or b.size() == 0) {
             return Poly();
         }
-        if (a.size() < b.size()) {
+        if (size(a) < b.size()) {
             swap(a, b);
         }
-        int n = 1, tot = a.size() + b.size() - 1;
+        int n = 1, tot = size(a) + b.size() - 1;
         while (n < tot) {
             n *= 2;
         }
-        if (((P - 1) & (n - 1)) != 0 || b.size() < 128) {
-            Poly c(a.size() + b.size() - 1);
-            for (int i = 0; i < a.size(); i++) {
+        if (((P - 1) & (n - 1)) != 0 or b.size() < 128) {
+            Poly c(size(a) + b.size() - 1);
+            for (int i = 0; i < size(a); i++) {
                 for (int j = 0; j < b.size(); j++) {
                     c[i + j] += a[i] * b[j];
                 }
@@ -174,13 +174,13 @@ struct Poly : public vector<MInt<P>> {
         return b;
     }
     constexpr friend Poly operator*(Poly a, Value b) {
-        for (int i = 0; i < int(a.size()); i++) {
+        for (int i = 0; i < int(size(a)); i++) {
             a[i] *= b;
         }
         return a;
     }
     constexpr friend Poly operator/(Poly a, Value b) {
-        for (int i = 0; i < int(a.size()); i++) {
+        for (int i = 0; i < int(size(a)); i++) {
             a[i] /= b;
         }
         return a;
@@ -240,10 +240,10 @@ struct Poly : public vector<MInt<P>> {
     }
     constexpr Poly pow(int k, int m) const {
         int i = 0;
-        while (i < this->size() && (*this)[i] == 0) {
+        while (i < this->size() and (*this)[i] == 0) {
             i++;
         }
-        if (i == this->size() || 1LL * i * k >= m) {
+        if (i == this->size() or 1LL * i * k >= m) {
             return Poly(m);
         }
         Value v = (*this)[i];
@@ -288,7 +288,7 @@ struct Poly : public vector<MInt<P>> {
         build(1, 0, n);
         function<void(int, int, int, const Poly &)> work = [&](int p, int l, int r, const Poly &num) {
             if (r - l == 1) {
-                if (l < int(ans.size())) {
+                if (l < int(ansize(s))) {
                     ans[l] = num[0];
                 }
             } else {
@@ -307,7 +307,7 @@ Poly<P> berlekampMassey(const Poly<P> &s) {
     Poly<P> c;
     Poly<P> oldC;
     int f = -1;
-    for (int i = 0; i < s.size(); i++) {
+    for (int i = 0; i < size(s); i++) {
         auto delta = s[i];
         for (int j = 1; j <= c.size(); j++) {
             delta -= c[j - 1] * s[i - j];
@@ -409,7 +409,7 @@ struct Comb {
         return _inv[m];
     }
     Z binom(int n, int m) {
-        if (n < m || m < 0) return 0;
+        if (n < m or m < 0) return 0;
         return fac(n) * invfac(m) * invfac(n - m);
     }
 } comb;

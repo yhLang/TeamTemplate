@@ -6,11 +6,11 @@ struct AcAutomaton {
     int SIZE = 0, tot = 0;
 
     AcAutomaton(const vector<string> &s) {
-        for (auto t : s) {SIZE += t.size();}
+        for (auto t : s) {SIZE += size(t);}
         trans.resize(SIZE + 1);
         ID.resize(SIZE + 1);
         fail.resize(SIZE + 1);
-        for (int i = 0; i < s.size(); i++) {insert(i, s[i]);}
+        for (int i = 0; i < size(s); i++) {insert(i, s[i]);}
         build();
     }
 

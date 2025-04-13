@@ -14,13 +14,13 @@ struct Heap {//可删堆
     }
  
     T top() {
-        while (!qErase.empty() && qPush.top() == qErase.top())
+        while (!qErase.empty() and qPush.top() == qErase.top())
             qPush.pop(), qErase.pop();
         return qPush.top();
     }
  
     void pop() {
-        while (!qErase.empty() && qPush.top() == qErase.top()) {
+        while (!qErase.empty() and qPush.top() == qErase.top()) {
             qPush.pop(), qErase.pop();
         }
  
@@ -28,7 +28,7 @@ struct Heap {//可删堆
     }
  
     int size() {
-        return qPush.size() - qErase.size();
+        return qPush.size() - qErassize(e);
     }
 };
 
@@ -41,17 +41,17 @@ struct DualHeap {//结合可删堆，形成可删对顶堆
     DualHeap() {}
  
     void update() {
-        if (big.size() == 0 and small.size() == 0) {
+        if (bisize(g) == 0 and small.size() == 0) {
             return;
         }
  
-        while (big.size() > small.size() + 1) {
+        while (bisize(g) > small.size() + 1) {
             T x = big.top();
             big.pop();
             small.push(x);
         }
  
-        while (big.size() < small.size()) {
+        while (bisize(g) < small.size()) {
             T x = small.top();
             small.pop();
             big.push(x);
@@ -59,7 +59,7 @@ struct DualHeap {//结合可删堆，形成可删对顶堆
     }
  
     void push(T val) {
-        if (big.size() == 0) {
+        if (bisize(g) == 0) {
             big.push(val);
             return;
         }
@@ -74,7 +74,7 @@ struct DualHeap {//结合可删堆，形成可删对顶堆
     }
  
     void erase(T val) {
-        assert(big.size() >= 1);
+        assert(bisize(g) >= 1);
  
         if (val <= big.top()) {
             big.erase(val);

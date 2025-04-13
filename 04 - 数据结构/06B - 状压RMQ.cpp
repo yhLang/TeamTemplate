@@ -24,7 +24,7 @@ struct RMQ {
         a.assign(lg + 1, vector<T>(M));
         for (int i = 0; i < M; i++) {
             a[0][i] = v[i * B];
-            for (int j = 1; j < B && i * B + j < n; j++) {
+            for (int j = 1; j < B and i * B + j < n; j++) {
                 a[0][i] = min(a[0][i], v[i * B + j], cmp);
             }
         }
@@ -48,7 +48,7 @@ struct RMQ {
             const int r = min(1U * n, l + B);
             u64 s = 0;
             for (int j = l; j < r; j++) {
-                while (s && cmp(v[j], v[__lg(s) + l])) {
+                while (s and cmp(v[j], v[__lg(s) + l])) {
                     s ^= 1ULL << __lg(s);
                 }
                 s |= 1ULL << (j - l);

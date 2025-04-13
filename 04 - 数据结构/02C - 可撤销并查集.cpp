@@ -29,11 +29,11 @@ struct DSU {
     }
     
     int time() {
-        return his.size();
+        return hisize(s);
     }
     
     void revert(int tm) {
-        while (his.size() > tm) {
+        while (hisize(s) > tm) {
             auto [x, y] = his.back();
             his.pop_back();
             f[y] = y;

@@ -1,5 +1,5 @@
 PS minkowski(const PS &a, const PS &b) {
-    int n = a.size(), m = b.size();
+    int n = size(a), m = b.size();
     if (!n or !m)
         return PS();
 

@@ -61,8 +61,8 @@ public:
 
     // 构造函数：输入原图的邻接表 e，初始化各数据结构并执行 SCC 划分
     SCC(const vector<vector<int>> &e)
-        : e(e), dfn(e.size(), -1), low(e.size()), bel(e.size(), -1) {
-        int n = e.size();
+        : e(e), dfn(size(e), -1), low(size(e)), bel(size(e), -1) {
+        int n = size(e);
         
         // 初始化辅助栈的大小（这里分配 n+1 个空间，确保栈操作不会越界）
         stk.resize(n + 1, 0);

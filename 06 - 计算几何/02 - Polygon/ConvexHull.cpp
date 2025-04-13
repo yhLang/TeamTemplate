@@ -2,7 +2,7 @@ PS convex(PS ps) {
     sort(ps.begin(), ps.end());
     ps.erase(unique(ps.begin(), ps.end()), ps.end());
 
-    const int n = ps.size();
+    const int n = psize(s);
     if (n <= 1) {
         return ps;
     }

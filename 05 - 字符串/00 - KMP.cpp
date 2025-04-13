@@ -1,6 +1,6 @@
 void getBorder(const string& s)
 {
-    int m = s.size();
+    int m = size(s);
     vector<int> border(m + 1);
     //border[i]表示字符串s[0, i - 1]的后缀与前缀的最长非平凡border（后缀与前缀均不包含字符串本身）
     border[0] = 0;
@@ -14,7 +14,7 @@ void getBorder(const string& s)
 
 void find(const string& s, const string& t)
 {
-    int n = s.size(), m = t.size();
+    int n = size(s), m = size(t);
     const auto border = getBorder(t);
     int j {};
     for (int i = 0; i < n; ++i) {

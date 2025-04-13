@@ -39,8 +39,8 @@ public:
     int cntBlock = 0, componentNum = 0;
 
     EdgeBC(const vector<vector<int>> &e)
-        : e(e), dfn(e.size(), -1), low(e.size()), bel(e.size(), -1), cutDeg(e.size()) {
-        int n = e.size();
+        : e(e), dfn(size(e), -1), low(size(e)), bel(size(e), -1), cutDeg(size(e)) {
+        int n = size(e);
         q.assign(n + 1, 0);
 
         for (int i = 0; i < n; i++) {
