@@ -18,7 +18,7 @@ class MCFGraph {
         dis[s] = 0; // 源点的距离为0
         q.emplace(0, s); // 把源点加入队列
 
-        while (!q.empty()) {
+        while (not empty(q)) {
             auto [D, x] = q.top(); // 取出当前距离最小的点
             q.pop();
 
@@ -28,7 +28,7 @@ class MCFGraph {
             // 遍历从当前点出发的所有边
             for (int i : g[x]) {
                 const auto& [y, c, f] = adj[i]; // 目标点、剩余容量、费用
-                if (c > 0 && dis[y] > D + h[x] - h[y] + f) {
+                if (c > 0 and dis[y] > D + h[x] - h[y] + f) {
                     // 如果容量大于0且找到更短的路径
                     dis[y] = D + h[x] - h[y] + f; // 更新最短距离
                     pre[y] = i; // 更新前驱边

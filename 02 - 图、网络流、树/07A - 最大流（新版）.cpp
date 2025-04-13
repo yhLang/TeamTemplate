@@ -7,14 +7,13 @@ class Flow {
         dep[s] = 0;
 
         q.push(s);
-        while (!q.empty()) {
+        while (not empty(q)) {
             const int u = q.front();
             q.pop();
 
             for (int i : g[u]) {
                 auto pr = adj[i];
-                int v = pr.first;
-                T c = pr.second;
+                auto[v, c] = pr;
 
                 if (c > 0 and dep[v] == -1) {
                     dep[v] = dep[u] + 1;
@@ -36,8 +35,7 @@ class Flow {
         for (int &i = cur[u]; i < static_cast<int>(g[u].size()); i++) {
             const int j = g[u][i];
             auto pr = adj[j];
-            int v = pr.first;
-            T c = pr.second;
+            auto[v, c] = pr;
 
             if (c > 0 and dep[v] == dep[u] + 1) {
                 T out = dfs(v, t, min(res, c));

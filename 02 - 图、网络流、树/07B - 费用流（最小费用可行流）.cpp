@@ -14,16 +14,13 @@ struct MCFGraph {
         priority_queue<pair<i64, int>, vector<pair<i64, int>>, greater<pair<i64, int>>> que;
         dis[s] = 0;
         que.emplace(0, s);
-        while (!que.empty()) {
-            i64 d = que.top().first;
-            int u = que.top().second;
+        while (!empty(que)) {
+            auto[d, u] = que.top();
             que.pop();
             if (dis[u] < d) continue;
             for (int i : g[u]) {
-                int v = e[i].v;
-                int c = e[i].c;
-                int f = e[i].f;
-                if (c > 0 && dis[v] > d + h[u] - h[v] + f) {
+                auto[v, c, f] = e[i];
+                if (c > 0 and dis[v] > d + h[u] - h[v] + f) {
                     dis[v] = d + h[u] - h[v] + f;
                     pre[v] = i;
                     que.emplace(dis[v], v);
@@ -53,7 +50,7 @@ struct MCFGraph {
         while (dijkstra(s, t)) {
             for (int i = 0; i < n; ++i) h[i] += dis[i];
             int aug = numeric_limits<int>::max();
-            for (int i = t; i != s; i = e[pre[i] ^ 1].v) aug = min(aug, e[pre[i]].c);
+            for (int i = t; i != s; i = e[pre[i] ^ 1].v) chmin(aug, e[pre[i]].c);
             for (int i = t; i != s; i = e[pre[i] ^ 1].v) {
                 e[pre[i]].c -= aug;
                 e[pre[i] ^ 1].c += aug;

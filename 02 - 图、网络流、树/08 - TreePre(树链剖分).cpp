@@ -99,7 +99,7 @@ public:
             y = fa[tp[y]];
         }
 
-        vec1.insert(vec1.end(), vec2.rbegin(), vec2.rend());
+        vec1.insert(end(vec1), rbegin(vec2), rend(vec2));
         return vec1;
     }
 
