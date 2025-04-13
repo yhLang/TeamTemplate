@@ -9,17 +9,17 @@ ostream& operator<<(ostream& s, const pair<F, S>& v)
 }
 template <ranges::range T>
     requires(!is_convertible_v<T, string_view>)
-istream& operator>>(istream& s, Tand v)
+istream& operator>>(istream& s, T&& v)
 {
-    for (autoand x : v)
+    for (auto&& x : v)
         s >> x;
     return s;
 }
 template <ranges::range T>
     requires(!is_convertible_v<T, string_view>)
-ostream& operator<<(ostream& s, Tand v)
+ostream& operator<<(ostream& s, T&& v)
 {
-    for (autoand x : v)
+    for (auto&& x : v)
         s << x << ' ';
     return s;
 }

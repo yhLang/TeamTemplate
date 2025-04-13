@@ -1,32 +1,18 @@
-constexpr int P = 1000000007;
-constexpr int L = 10000;
-
-int fac[L + 1], invfac[L + 1];
-
-int binom(int n, int m) {
-    if (n < m or m < 0) {
-        return 0;
-    }
-    return 1LL * fac[n] * invfac[m] % P * invfac[n - m] % P;
-}
-
-int power(int a, int b) {
-    int res = 1;
-    for (; b; b /= 2, a = 1LL * a * a % P) {
-        if (b % 2) {
-            res = 1LL * res * a % P;
+template<size_t N>
+struct Comb {
+    array<i64, N + 1> fac, ifac, inv;
+    Comb() : fac{1, 1}, ifac{1, 1}, inv{0, 1} {
+        for (int i = 2; i <= N; i++) {
+            inv[i] = inv[P % i] * (P - P / i) % P;
+            fac[i] = fac[i - 1] * i % P;
+            ifac[i] = ifac[i - 1] * inv[i] % P;
         }
     }
-    return res;
-}
-
-void init() {
-    fac[0] = 1;
-    for (int i = 1; i <= L; i++) {
-        fac[i] = 1LL * fac[i - 1] * i % P;
+    i64 operator()(int n) {
+        return n < 0 ? ifac[-n] : fac[n];
     }
-    invfac[L] = power(fac[L], P - 2);
-    for (int i = L; i; i--) {
-        invfac[i - 1] = 1LL * invfac[i] * i % P;
+    i64 operator()(int n, int m) {
+        if (n < m or m < 0) return 0;
+        return fac[n] * ifac[m] % P * ifac[n - m] % P;
     }
-}
+};
