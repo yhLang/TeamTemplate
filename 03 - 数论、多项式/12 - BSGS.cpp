@@ -1,24 +1,20 @@
-i64 BSGS(i64 a, i64 b, i64 p)
+i64 BSGS(i64 a, i64 b, i64 m)
 {
-    if (1 % p == b % p) { // a^0 mod p = b mod p
-        return 0; // 特判x = 0，1%p是因为p可能等于1
+    i64 cur{1};
+    const i64 K{sqrt(m) + 1};
+    unordered_map<i64, i64> hs;
+    for (int B = 1; B <= K; ++B)
+    {
+        (cur *= a) %= m;
+        hs[b * cur % m] = B; // 哈希表中存B的值
     }
-    unordered_map<i64, i64> hash;
-    i64 k = sqrt(p) + 1;
-    for (i64 B = 0, val = b % p; B < k; B++) { // 构造哈希表/map，b * (a^B)  ->  B
-        hash[val] = B;
-        val = val * a % p; // b * (a^B)，每次乘以一个a
-    }
-    i64 ak = 1; // 预处理 a^k
-    for (i64 i = 0; i < k; i++) {
-        ak = ak * a % p;
-    }
-
-    for (i64 A = 1, val = ak; A <= k; A++) { // val = (a ^ k) ^ A
-        if (hash.contains(val)) {
-            return A * k - hash[val]; // A*k - B
+    i64 now = cur; // 此时cur = a^K
+    for (int A = 1; A <= K; ++A)
+    {
+        if (hs.contains(now)) {
+            return A * K - hs[now];
         }
-        val = val * ak % p;
+        (now *= cur) %= m;
     }
-    return -1; // 无解
+    return -1; // 没有找到，无解
 }
