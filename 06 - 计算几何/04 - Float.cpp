@@ -136,7 +136,7 @@ public:
     }
 
     friend constexpr ostream &operator<<(ostream &os, FloatPointNumber a) {
-        return os << fixed << std::setprecision(precision) << a.val();
+        return os << fixed << setprecision(precision) << a.val();
     }
 
     // 常数

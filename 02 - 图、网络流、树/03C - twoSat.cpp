@@ -1,4 +1,4 @@
-class TwoSat
+class TwoSAT
 {
     const int n;                     // 变量的数量
     vector<vector<int>> adj; // 邻接表，用来存储蕴含图
@@ -8,7 +8,7 @@ public:
 
     // 构造函数
     // 参数 n 表示布尔变量的数量，构造一个包含 2n 个顶点的蕴含图
-    TwoSat(int n) : n(n), adj(2 * n) {}
+    TwoSAT(int n) : n(n), adj(2 * n) {}
 
     // x * 2         为 x 设 0
     // x * 2 + 1     为 x 设 1

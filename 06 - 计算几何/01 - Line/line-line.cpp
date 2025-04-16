@@ -18,9 +18,9 @@ int inCircle(Point a, Point b, Point c, Point d) {
     Float ag1 = getAngle(a, b, c), ag2 = getAngle(d, c, b);
     auto sgn = [](Float x) { return x < 0 ? -1 : (x > 0); };
     if (sgn(ag1) == sgn(ag2)) {
-        return sgn(PI - std::abs(ag1 + ag2));
+        return sgn(PI - abs(ag1 + ag2));
     } else {
-        return sgn(std::abs(ag1) - std::abs(ag2));
+        return sgn(abs(ag1) - abs(ag2));
     }
 }
 

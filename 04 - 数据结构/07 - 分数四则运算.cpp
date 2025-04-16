@@ -70,8 +70,8 @@ struct Frac {
     friend bool operator>=(const Frac &lhs, const Frac &rhs) {
         return lhs.num * rhs.den >= rhs.num * lhs.den;
     }
-    friend std::ostream &operator<<(std::ostream &os, Frac x) {
-        T g = std::gcd(x.num, x.den);
+    friend ostream &operator<<(ostream &os, Frac x) {
+        T g = gcd(x.num, x.den);
         if (x.den == g) {
             return os << x.num / g;
         } else {
