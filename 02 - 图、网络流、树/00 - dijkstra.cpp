@@ -19,7 +19,7 @@ class Dijkstra {
             if (D > dis[x])
                 continue;
 
-            for (auto and[y, w] : e[x]) {
+            for (auto &&[y, w] : e[x]) {
                 if (dis[y] > dis[x] + w) {
                     dis[y] = dis[x] + w;
                     q.emplace(dis[y], y);
