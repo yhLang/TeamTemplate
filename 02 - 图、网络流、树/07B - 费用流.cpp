@@ -103,9 +103,10 @@ public:
         flow.add(x, y, cap, fees);
         totCap += cap;
     }
+    //会一直找最小费用，实在不行了再借用 s -> t的那个 0费边流完，来保证可行
     pair<T, F> work(int s, int t) {
-        flow.add(superStr, s, totCap, 0);
-        flow.add(s, t, totCap, 0);
+        flow.add(superStr, s, totCap, 0);//保证了流入的总流量
+        flow.add(s, t, totCap, 0);//保证总能流完
         return flow.work(superStr, t);
     }
 };
