@@ -55,11 +55,7 @@ signed main()
         
     };
 
-    int t{1};
-
-    while (t--) {
-        solve();
-    }
+    solve();
 
     return 0;
 }
